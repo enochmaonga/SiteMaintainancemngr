@@ -53,9 +53,28 @@ public class App {
         }
     }
 
-    public List<Object> getPersons() {
-        return null;
+//    public List<Object> getPersons() {
+//        return null;
+//
+//    }
+    public List<Person> getPersons() {
+        try(Connection con = (Connection) DB.sql2o.open()){
+            String joinQuery = "SELECT person_id FROM communities_persons WHERE community_id = :community_id";
+            List<Integer> personIds = con.createQuery(joinQuery)
+                    .addParameter("community_id", this.getId())
+                    .executeAndFetch(Integer.class);
 
+            List<Person> persons = new ArrayList<Person>();
+
+            for (Integer personId : personIds) {
+                String personQuery = "SELECT * FROM persons WHERE id = :personId";
+                Person person = con.createQuery(personQuery)
+                        .addParameter("personId", personId)
+                        .executeAndFetchFirst(Person.class);
+                persons.add(person);
+            }
+            return persons;
+        }
     }
 }
 

@@ -64,4 +64,11 @@ class AppTest {
         List savedPersons = testCommunity.getPersons();
         assertEquals(savedPersons.size(), 1);
     }
+    @Test
+    public void delete_deletesCommunity_true() {
+        Community testCommunity = new Community("Fire Enthusiasts", "Flame on!");
+        testCommunity.save();
+        testCommunity.delete();
+        assertEquals(0, Community.all().size());
+    }
 }
