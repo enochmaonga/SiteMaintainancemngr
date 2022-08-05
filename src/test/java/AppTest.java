@@ -38,6 +38,7 @@ class AppTest {
     @Test
     public void all_returnsAllInstancesOfApp_true() {
         App firstApp = new App("Fire Enthusiasts", "Flame on!");
+        engineers firstengineers;
         firstengineers.save();
         App secondengineers = new App("Water Enthusiasts", "Lovers of all things water monsters!");
         secondengineers.save();
