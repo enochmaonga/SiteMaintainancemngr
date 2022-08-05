@@ -1,5 +1,6 @@
 package models;
 
+import java.sql.Connection;
 import java.util.List;
 
 public class Person {
@@ -17,23 +18,27 @@ public class Person {
         return null;
     }
 
-    public List<Community> getCommunities() {
+    public List<engineers> getengineers() {
         try(Connection con = DB.sql2o.open()){
-            String joinQuery = "SELECT community_id FROM communities_persons WHERE person_id = :person_id";
-            List<Integer> communityIds = con.createQuery(joinQuery)
+            String joinQuery = "SELECT engineers_id FROM engineers_persons WHERE person_id = :person_id";
+            List<Integer> engineersIds = con.createQuery(joinQuery)
                     .addParameter("person_id", this.getId())
                     .executeAndFetch(Integer.class);
 
-            List<Community> communities = new ArrayList<Community>();
+            List<engineers> engineers = new ArrayList<engineers>();
 
-            for (Integer communityId : communityIds) {
-                String communityQuery = "SELECT * FROM communities WHERE id = :communityId";
-                Community community = con.createQuery(communityQuery)
-                        .addParameter("communityId", communityId)
-                        .executeAndFetchFirst(Community.class);
-                communities.add(community);
+            for (Integer engineersId : engineersIds) {
+                String engineersQuery = "SELECT * FROM engineers WHERE id = :engineersId";
+                engineers engineers = con.createQuery(engineersQuery)
+                        .addParameter("engineersId", engineersId)
+                        .executeAndFetchFirst(engineers.class);
+                engineers.add(engineers);
             }
-            return communities;
+            return engineers;
         }
+    }
+
+    public Object getId() {
+        return null;
     }
 }

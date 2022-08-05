@@ -1,9 +1,11 @@
 package dao;
 
-import jdk.internal.jimage.BasicImageReader;
+
+import org.eclipse.jetty.server.AbstractNetworkConnector;
 
 public class DB {
+    public static AbstractNetworkConnector sql2o;
 
-    public static BasicImageReader sql2o;
+
 }
 

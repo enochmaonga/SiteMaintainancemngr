@@ -38,37 +38,47 @@ class AppTest {
     @Test
     public void all_returnsAllInstancesOfApp_true() {
         App firstApp = new App("Fire Enthusiasts", "Flame on!");
-        firstApp.save();
-        App secondApp = new App("Water Enthusiasts", "Lovers of all things water monsters!");
-        secondApp.save();
-        assertEquals(true, App.all().get(0).equals(firstApp));
-        assertEquals(true, App.all().get(1).equals(secondApp));
+        firstengineers.save();
+        App secondengineers = new App("Water Enthusiasts", "Lovers of all things water monsters!");
+        secondengineers.save();
+        assertEquals(true, engineers.all().get(0).equals(firstApp));
+        assertEquals(true, engineers.all().get(1).equals(secondApp));
     }
     @Test
-    public void addPerson_addsPersonToCommunity() {
+    public void addPerson_addsPersonToengineers() {
         App testApp = new App("Fire Enthusiasts", "Flame on!");
-        testApp.save();
+        testengineers.save();
         Person testPerson = new Person("Henry", "[email protected]Links to an external site.");
         testPerson.save();
-        testApp.addPerson(testPerson);
-        Person savedPerson = (Person) testApp.getPersons().get(0);
+        testengineers.addPerson(testPerson);
+        Person savedPerson = (Person) testengineers.getPersons().get(0);
         assertTrue(testPerson.equals(savedPerson));
     }
     @Test
     public void getPersons_returnsAllPersons_List() {
-        App testCommunity = new App("Fire Enthusiasts", "Flame on!");
-        testCommunity.save();
+        App testengineers = new App("Fire Enthusiasts", "Flame on!");
+        testengineers.save();
         Person testPerson = new Person("Henry", "[email protected]Links to an external site.");
         testPerson.save();
-        testCommunity.addPerson(testPerson);
-        List savedPersons = testCommunity.getPersons();
+        testengineers.addPerson(testPerson);
+        List savedPersons = testengineers.getPersons();
         assertEquals(savedPersons.size(), 1);
     }
     @Test
-    public void delete_deletesCommunity_true() {
-        Community testCommunity = new Community("Fire Enthusiasts", "Flame on!");
+    public void delete_deletesengineers_true() {
+        engineers testCommunity = new engineers("Fire Enthusiasts", "Flame on!");
         testCommunity.save();
         testCommunity.delete();
-        assertEquals(0, Community.all().size());
+        assertEquals(0, engineers.all().size());
+    }
+    @Test
+    public void delete_deletesAllPersonsAndCommunitiesAssociations() {
+        engineers testengineers = new engineers("Fire Enthusiasts", "Flame on!");
+        testengineers.save();
+        Person testPerson = new Person("Henry", "henry@henry.com");
+        testPerson.save();
+        testengineers.addPerson(testPerson);
+        testengineers.delete();
+        assertEquals(0, testPerson.getCommunities().size());
     }
 }
